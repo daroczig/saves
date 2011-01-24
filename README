@@ -1,0 +1,5 @@
+Please check DESCRIPTION file.
+
+Install from r-forge via:
+-------------------------
+install.packages('saves', ...)
