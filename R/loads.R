@@ -32,7 +32,8 @@ loads <- function (file=NULL, variables=NULL) {
 		if (!file.exists(file)) {
 			stop('Archive not found!')
 		} else {
-			tmp <- tempdir()
+			tmp <-  paste(tempdir(), '/saves.temp', sep='')
+			dir.create(tmp)
 			untar(file, exdir=tmp)
 			for (i in 1:length(variables)) {
 				f <- paste(tmp, "/", variables[i], '.Rdata', sep='')

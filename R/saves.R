@@ -23,10 +23,10 @@ saves <- function (df, file=paste(df, '.Rdatas', sep='')) {
 	if (file.exists(file)) {
 		stop('Destination filename exists! Use other filename.')
 	} else {
-		tmp <- tempdir()
+		tmp <- paste(tempdir(), '/saves.temp', sep='')
 		dir.create(tmp)
 		data <- get(df)
-		attach(data)				# add new envir!
+		attach(data, warn.conflicts = FALSE)
 		for (i in 1:length(data)) {
 			save(list=names(data)[i], file=paste(tmp, '/', names(data)[i], '.Rdata', sep=''))
 		}
