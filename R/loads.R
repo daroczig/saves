@@ -15,41 +15,46 @@
 #' 
 #' @param file character string: the filename from which to load the variables 
 #' @param variables A character vector containing the variable names to load
+#' @param to.data.frame boolean: the default behavior of \code{loads} is to concatenate the variables to a list.
+#' This could be overriden with TRUE argument specified at to.data.frame parameter, which will return
+#' a dataframe instead of list. Only do this if all your variables have the same number of cases!
 #' @return Loaded data.frame
 #' @export
 #' @examples \dontrun{
 #' # Loading the 'v1' and 'v5' variables of the demo dataset.
 #' data(evs.2000.hun)
 #' saves("evs.2000.hun")
-#' evs.filtered <- loads("evs.2000.hun.Rdatas", c('v1', 'v5'))
+#' evs.filtered.list <- loads("evs.2000.hun.Rdatas", c('v1', 'v5'))
+#' evs.filtered.df <- loads("evs.2000.hun.Rdatas", c('v1', 'v5'), to.data.frame=TRUE)
 #' }
 #' @author Gergely Daróczi \email{daroczi.gergely@@btk.ppke.hu} 
 
-loads <- function (file=NULL, variables=NULL) {
+loads <- function (file=NULL, variables=NULL, to.data.frame=FALSE) {
 	if (is.null(variables) | is.null(file)) {
-		stop('Arguments missing! Specify a filename and variable names to load.')
-	} else {
-		if (!file.exists(file)) {
-			stop('Archive not found!')
-		} else {
-			tmp <-  paste(tempdir(), '/saves.temp', sep='')
-			dir.create(tmp)
-			untar(file, exdir=tmp)
-			for (i in 1:length(variables)) {
-				f <- paste(tmp, "/", variables[i], '.Rdata', sep='')
-				if (!file.exists(f)) {
-					stop(paste('Variable: <<', variables[i], '>> not found!'))
-				} else {
-					if (i == 1) {
-					data <- as.data.frame(local(get(load(f))))
-					} else {
-						data <- cbind(data, as.data.frame(local(get(load(f)))))
-					}
-				}
+		stop('Arguments missing! Specify a filename and variable names also to load.')
+	}
+	if (!file.exists(file)) {
+		stop('Archive not found!')
+	}
+	tmp <-  paste(tempdir(), '/saves.temp', sep='')
+	dir.create(tmp)
+	untar(file, exdir=tmp)
+	for (i in 1:length(variables)) {
+		f <- paste(tmp, "/", variables[i], '.Rdata', sep='')
+		if (!file.exists(f)) {
+			stop(paste('Variable: <<', variables[i], '>> not found!'))
+		}
+		if (i == 1) {
+			if (to.data.frame == FALSE) {
+				data <- list(local(get(load(f))))
+			} else {
+				data <- data.frame(local(get(load(f))))
 			}
-			names(data) <- variables
-			unlink(tmp, recursive = TRUE)
-			return(data)
+		} else {
+			data[paste(variables[i])] <- as.data.frame(local(get(load(f))))
 		}
 	}
+	names(data) <- variables
+	unlink(tmp, recursive = TRUE)
+	return(data)
 }

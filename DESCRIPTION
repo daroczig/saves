@@ -1,8 +1,8 @@
 Package: saves
 Type: Package
 Title: Fast load variables
-Version: 0.1
-Date: 2011-01-24
+Version: 0.2
+Date: 2011-01-25
 Author: Gergely Daróczi
 Maintainer: Gergely Daróczi <daroczi.gergely@btk.ppke.hu>
 Description: The purpose of this package is to be able to save and load
@@ -17,4 +17,4 @@ Description: The purpose of this package is to be able to save and load
 License: AGPL-3
 LazyData: no
 Encoding: UTF-8
-Collate: 'docu.R' 'init.R' 'loads.R' 'saves.R'
+Collate: 'docu.R' 'loads.R' 'saves.R'
