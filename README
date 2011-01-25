@@ -1,5 +1,4 @@
-Please check DESCRIPTION file.
+Please check DESCRIPTION file!
 
-Install from r-forge via:
--------------------------
-install.packages('saves', ...)
+Saves is on CRAN now: http://cran.r-project.org/web/packages/saves/
+Install via: install.packages('saves')
