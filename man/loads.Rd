@@ -1,7 +1,7 @@
 \name{loads}
 \alias{loads}
 \title{Loading only given variables of a data...}
-\usage{loads(file, variables)
+\usage{loads(file, variables, to.data.frame=FALSE)
 }
 \description{Loading only given variables of a data.frame from binary file}
 \details{\code{loads} does what the name suggests: it loads data from a special binary file format (Rdatas) made
@@ -20,11 +20,15 @@ The author of this package would like to emphasize: this package could be useful
 \author{Gergely Daróczi \email{daroczi.gergely@btk.ppke.hu}}
 \arguments{\item{file}{character string: the filename from which to load the variables}
 \item{variables}{A character vector containing the variable names to load}
+\item{to.data.frame}{boolean: the default behavior of \code{loads} is to concatenate the variables to a list.
+This could be overriden with TRUE argument specified at to.data.frame parameter, which will return
+a dataframe instead of list. Only do this if all your variables have the same number of cases!}
 }
 \examples{\dontrun{
 # Loading the 'v1' and 'v5' variables of the demo dataset.
 data(evs.2000.hun)
 saves("evs.2000.hun")
-evs.filtered <- loads("evs.2000.hun.Rdatas", c('v1', 'v5'))
+evs.filtered.list <- loads("evs.2000.hun.Rdatas", c('v1', 'v5'))
+evs.filtered.df <- loads("evs.2000.hun.Rdatas", c('v1', 'v5'), to.data.frame=TRUE)
 }}
 
