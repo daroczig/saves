@@ -1,0 +1,15 @@
+saves 0.3 (2010-03-06) ----------------------------------------------------------------------------
+	* Added ultra.fast option for saves() and loads() for increased speed while loading R objects.
+	* Added a semi-finished vignette about performance benchmark.
+	* Added CHANGELOG :)
+
+
+saves 0.2 (2010-01-27) ----------------------------------------------------------------------------
+
+	* Improved documentation, added some helper feedback on user error.
+	* Lists are supported.
+
+
+saves 0.1 (2010-01-25) ----------------------------------------------------------------------------
+	
+	* Initial (working) concept with data tables.

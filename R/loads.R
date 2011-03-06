@@ -1,8 +1,8 @@
 #' Loading only given variables of a data.frame from binary file
 #' 
-#' \code{loads} does what the name suggests: it loads data from a special binary file format (Rdatas) made
-#' up by the \code{saves} function. This special, uncompressed tar archive inlcudes several separate
-#' Rdata files (saved by \code{save} function) as being columns/variables of a data.frame.
+#' \code{\link{loads}} does what the name suggests: it loads data from a special binary file format (Rdatas) made
+#' up by the \code{\link{saves}} function. This special, uncompressed tar archive inlcudes several separate
+#' Rdata files (saved by \code{\link{save}} function) as being columns/variables of a data.frame.
 #' 
 #' The purpose of this function is to be able only a few variables of a data.frame really fast. It is
 #' done by reading and writing datas in binary format without any transformations, and combining the
@@ -13,13 +13,21 @@
 #' 
 #' The author of this package would like to emphasize: this package could be useful only in few cases! 
 #' 
-#' @param file character string: the filename from which to load the variables 
+#' @param file character string: the (Rdatas) filename from which to load the variables. If using
+#' ultra.fast = TRUE option, specify the directory holding the uncompressed R objects (saved via
+#' \code{saves(..., ultra.fast = TRUE)}).
 #' @param variables A character vector containing the variable names to load
 #' @param to.data.frame boolean: the default behavior of \code{loads} is to concatenate the variables to a list.
 #' This could be overriden with TRUE argument specified at to.data.frame parameter, which will return
 #' a dataframe instead of list. Only do this if all your variables have the same number of cases!
+#' @param ultra.fast boolean: if TRUE, ultra fast (...) processing is done without any check to parameters
+#' or file existence/permissions. Be sure if using this setting as no debugging is done! Only recommended
+#' for servers dealing with lot of R objects' saves and loads in a monitored environment. Also, for
+#' performance gain, it is advised not to convert the list to data frame (to.data.frame = FALSE).
 #' @return Loaded data.frame
 #' @export
+#' @seealso 
+#' 	\code{\link{saves}} to save R objects to Rdatas binary format 
 #' @examples \dontrun{
 #' # Loading the 'v1' and 'v5' variables of the demo dataset.
 #' data(evs.2000.hun)
@@ -27,9 +35,25 @@
 #' evs.filtered.list <- loads("evs.2000.hun.Rdatas", c('v1', 'v5'))
 #' evs.filtered.df <- loads("evs.2000.hun.Rdatas", c('v1', 'v5'), to.data.frame=TRUE)
 #' }
-#' @author Gergely Daróczi \email{daroczi.gergely@@btk.ppke.hu} 
+#' @author Gergely Daróczi \email{gergely@@snowl.net} 
 
-loads <- function (file=NULL, variables=NULL, to.data.frame=FALSE) {
+loads <- function (file=NULL, variables=NULL, to.data.frame=FALSE, ultra.fast=FALSE) {
+	if (ultra.fast == TRUE) {
+		for (i in 1:length(variables)) {
+			f <- paste(file, "/", variables[i], '.Rdata', sep='')
+			if (i == 1) {
+				if (to.data.frame == FALSE) {
+					data <- list(local(get(load(f))))
+				} else {
+					data <- data.frame(local(get(load(f))))
+				}
+			} else {
+				data[paste(variables[i])] <- as.data.frame(local(get(load(f))))
+			}
+		}
+		names(data) <- variables
+		return(data)
+	}
 	if (is.null(variables) | is.null(file)) {
 		stop('Arguments missing! Specify a filename and variable names also to load.')
 	}
