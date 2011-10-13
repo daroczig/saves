@@ -4,9 +4,9 @@
 \usage{loads(file, variables, to.data.frame=FALSE, ultra.fast=FALSE)
 }
 \description{Loading only given variables of a data.frame from binary file}
-\details{\code{\link{loads}} does what the name suggests: it loads data from a special binary file format (Rdatas) made
+\details{\code{\link{loads}} does what the name suggests: it loads data from a special binary file format (RDatas) made
 up by the \code{\link{saves}} function. This special, uncompressed tar archive inlcudes several separate
-Rdata files (saved by \code{\link{save}} function) as being columns/variables of a data.frame.
+RData files (saved by \code{\link{save}} function) as being columns/variables of a data.frame.
 
 The purpose of this function is to be able only a few variables of a data.frame really fast. It is
 done by reading and writing datas in binary format without any transformations, and combining the
@@ -17,9 +17,9 @@ whole binary data, but be conscious always choosing the aprropriate method to wr
 
 The author of this package would like to emphasize: this package could be useful only in few cases!}
 \value{Loaded data.frame}
-\seealso{\code{\link{saves}} to save R objects to Rdatas binary format}
+\seealso{\code{\link{saves}} to save R objects to RDatas binary format}
 \author{Gergely Daróczi \email{gergely@snowl.net}}
-\arguments{\item{file}{character string: the (Rdatas) filename from which to load the variables. If using
+\arguments{\item{file}{character string: the (RDatas) filename from which to load the variables. If using
 ultra.fast = TRUE option, specify the directory holding the uncompressed R objects (saved via
 \code{saves(..., ultra.fast = TRUE)}).}
 \item{variables}{A character vector containing the variable names to load}
@@ -34,8 +34,8 @@ performance gain, it is advised not to convert the list to data frame (to.data.f
 \examples{\dontrun{
 # Loading the 'v1' and 'v5' variables of the demo dataset.
 data(evs.2000.hun)
-saves("evs.2000.hun")
-evs.filtered.list <- loads("evs.2000.hun.Rdatas", c('v1', 'v5'))
-evs.filtered.df <- loads("evs.2000.hun.Rdatas", c('v1', 'v5'), to.data.frame=TRUE)
+saves(evs.2000.hun)
+evs.filtered.list <- loads("evs.2000.hun.RDatas", c('v1', 'v5'))
+evs.filtered.df <- loads("evs.2000.hun.RDatas", c('v1', 'v5'), to.data.frame=TRUE)
 }}
 

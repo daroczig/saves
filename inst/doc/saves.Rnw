@@ -101,7 +101,7 @@ the saves() function. For example saving the 'diamonds' data frame from ggplot2 
 \lstset{alsoletter={.},morekeywords={saves,loads,ultra.fast,to.data.frame,file,variables,save,names,write.table,load.table,compres,precheck,row.names,dbWriteTable,overwrite,header,sep,comment.char,stringsAsFactors,function,dbReadTable,library,dbConnect,user,password,dbname,host,compress,quote,read.table,read.csv,read.spss,load,sqldf,list,file.format,tempfile}}
 \lstset{keywordstyle=\color{black}\bfseries}
 \begin{lstlisting}[frame=tb]
-> saves("diamonds")
+> saves(diamonds)
 \end{lstlisting}
 
 This command will create a file named to "diamonds.Rdatas" in the current working directory. This file is
@@ -111,7 +111,7 @@ a compressed tar archive which contains the binary objects of all variables from
 Custom filename can be specified via the "file" parameter, see:
 
 \begin{lstlisting}[frame=tb]
-> saves("diamonds", file="foo.bar")
+> saves(diamonds, file="foo.bar")
 \end{lstlisting}
 
 Loading of the saved binary format can be done via the loads() function:
@@ -134,7 +134,7 @@ and also: no compression is done while saving the variables, all files are put i
 To save a data frame for later "ultra.fast" loading:
 
 \begin{lstlisting}[frame=tb]
-> saves("diamonds", ultra.fast = TRUE)
+> saves(diamonds, ultra.fast = TRUE)
 \end{lstlisting}
 
 Loading of the data frame (or list) is done via the loads() function just like above with an extra parameter:
@@ -189,8 +189,8 @@ Transform each data frame to the required formats:
 > write.table(diamonds, file="diamonds.csv", sep = ",", quote = FALSE, row.names=FALSE)
 > names(data)[6] <- "tablee" 				# as the default "table" is internal in MySQL
 > dbWriteTable(con, "diamonds", data, overwrite = TRUE)
-> saves("diamonds")
-> saves("diamonds", file="diamonds-uf.Rdatas", ultra.fast = TRUE)
+> saves(diamonds)
+> saves(diamonds, file="diamonds-uf.Rdatas", ultra.fast = TRUE)
 > rm(data)
 \end{lstlisting}
 

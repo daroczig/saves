@@ -1,8 +1,8 @@
 #' Loading only given variables of a data.frame from binary file
 #' 
-#' \code{\link{loads}} does what the name suggests: it loads data from a special binary file format (Rdatas) made
+#' \code{\link{loads}} does what the name suggests: it loads data from a special binary file format (RDatas) made
 #' up by the \code{\link{saves}} function. This special, uncompressed tar archive inlcudes several separate
-#' Rdata files (saved by \code{\link{save}} function) as being columns/variables of a data.frame.
+#' RData files (saved by \code{\link{save}} function) as being columns/variables of a data.frame.
 #' 
 #' The purpose of this function is to be able only a few variables of a data.frame really fast. It is
 #' done by reading and writing datas in binary format without any transformations, and combining the
@@ -13,7 +13,7 @@
 #' 
 #' The author of this package would like to emphasize: this package could be useful only in few cases! 
 #' 
-#' @param file character string: the (Rdatas) filename from which to load the variables. If using
+#' @param file character string: the (RDatas) filename from which to load the variables. If using
 #' ultra.fast = TRUE option, specify the directory holding the uncompressed R objects (saved via
 #' \code{saves(..., ultra.fast = TRUE)}).
 #' @param variables A character vector containing the variable names to load
@@ -27,20 +27,20 @@
 #' @return Loaded data.frame
 #' @export
 #' @seealso 
-#' 	\code{\link{saves}} to save R objects to Rdatas binary format 
+#' 	\code{\link{saves}} to save R objects to RDatas binary format 
 #' @examples \dontrun{
 #' # Loading the 'v1' and 'v5' variables of the demo dataset.
 #' data(evs.2000.hun)
-#' saves("evs.2000.hun")
-#' evs.filtered.list <- loads("evs.2000.hun.Rdatas", c('v1', 'v5'))
-#' evs.filtered.df <- loads("evs.2000.hun.Rdatas", c('v1', 'v5'), to.data.frame=TRUE)
+#' saves(evs.2000.hun)
+#' evs.filtered.list <- loads("evs.2000.hun.RDatas", c('v1', 'v5'))
+#' evs.filtered.df <- loads("evs.2000.hun.RDatas", c('v1', 'v5'), to.data.frame=TRUE)
 #' }
 #' @author Gergely Daróczi \email{gergely@@snowl.net} 
 
 loads <- function (file=NULL, variables=NULL, to.data.frame=FALSE, ultra.fast=FALSE) {
 	if (ultra.fast == TRUE) {
 		for (i in 1:length(variables)) {
-			f <- paste(file, "/", variables[i], '.Rdata', sep='')
+			f <- paste(file, "/", variables[i], '.RData', sep='')
 			if (i == 1) {
 				if (to.data.frame == FALSE) {
 					data <- list(local(get(load(f))))
@@ -60,11 +60,11 @@ loads <- function (file=NULL, variables=NULL, to.data.frame=FALSE, ultra.fast=FA
 	if (!file.exists(file)) {
 		stop('Archive not found!')
 	}
-	tmp <-  paste(tempdir(), '/saves.temp', sep='')
+	tmp <-  tempfile('saves.dir-')
 	dir.create(tmp)
 	untar(file, exdir=tmp)
 	for (i in 1:length(variables)) {
-		f <- paste(tmp, "/", variables[i], '.Rdata', sep='')
+		f <- paste(tmp, "/", variables[i], '.RData', sep='')
 		if (!file.exists(f)) {
 			stop(paste('Variable: <<', variables[i], '>> not found!'))
 		}

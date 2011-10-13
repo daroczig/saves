@@ -1,3 +1,10 @@
+saves 0.4 (2010-10-12) ----------------------------------------------------------------------------
+	* Added link to rredis (as highly suggested alternative for storing data) to README
+	* Added `overwrite` parameter to `saves()`
+	* Issue #3 (https://github.com/daroczig/saves/issues/3) resolved: extension set to `.RDatas`
+	* Issue #4 (https://github.com/daroczig/saves/issues/4) resolved: `tempdir()` usage
+	* Issue #5 (https://github.com/daroczig/saves/issues/5) resolved: change in `df` (obsolate) argument 
+
 saves 0.3 (2010-03-06) ----------------------------------------------------------------------------
 	* Added ultra.fast option for saves() and loads() for increased speed while loading R objects.
 	* Added a semi-finished vignette about performance benchmark.

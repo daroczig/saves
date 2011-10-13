@@ -2,3 +2,10 @@ Please check DESCRIPTION file!
 
 Saves is on CRAN now: http://cran.r-project.org/web/packages/saves/
 Install via: install.packages('saves')
+
+---
+
+This package is not under active development now, but I try to maintain the code based on feedbacks/reported issues.
+My main purpose for not trying to implement new features is simple: I have found a nice and fast nosql backend (redis), from which loading data is extremely fast - thanks to the fact that redis stores its data in memory (as default config). This means you will need decent amount of memory, but you could store and reach your data outside of R session, which is handy in server environment (what was the main purpose of this package).
+I am aware of the fact the redis will not solve every problem of "fast loading varaibles" (e.g. loading only few variables from big datasets), but checking this options is highly suggested to all users. B. W. Lewis has developed a nice connector to redis: http://cran.r-project.org/web/packages/rredis/index.html
+I think saving and loading data to/from redis should be done as simple key-value (see: `?redisSet` and `?redisGet`) if you need to load the whole dataset, but storing variables in hashes might be an option also (implementing this later is under judgement in this package for extra performance boost).
