@@ -29,12 +29,10 @@ saves <- function (..., list=character(), file=NULL, overwrite=FALSE, ultra.fast
         df <- list[1]
         data <- get(df)
         dir.create(df)
-        attach(data, warn.conflicts = FALSE)
+        e <- as.environment(data)
         for (i in 1:length(data)) {
-            save(list=names(data)[i], file=paste(df, '/', names(data)[i], '.RData', sep=''),
-                 compress=FALSE, precheck=FALSE)
+            save(list=names(data)[i], file=paste(df, '/', names(data)[i], '.RData', sep=''), compress=FALSE, precheck=FALSE, envir = e)
         }
-        detach(data)
         return(invisible(df))
     }
 
@@ -54,9 +52,8 @@ saves <- function (..., list=character(), file=NULL, overwrite=FALSE, ultra.fast
 
         tmp <- tempfile('saves.dir-')
         dir.create(tmp)
-        env <- attach(data, warn.conflicts = FALSE, name=paste(letters[ceiling(runif(20)*25)], collapse = ''))
-        lapply(names(data), function(x) save(list=x, file=paste(tmp, '/', x, '.RData', sep='')))
-        rm(env)
+        e <- as.environment(data)
+        lapply(names(data), function(x) save(list=x, file=paste(tmp, '/', x, '.RData', sep=''), envir = e))
         w <- getwd()
         setwd(tmp)
         tar(paste(w, '/', file[i], sep=''), '.', compression='none')
