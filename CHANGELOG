@@ -1,3 +1,14 @@
+saves 0.5 (2013-12-27) ----------------------------------------------------------------------------
+	This is a simple maintainence release without any bugfixes or added features.
+
+	* Updated Rbuildignore
+	* Removed Eclipse specific stuff - long live ESS
+	* Code formatting
+	* Updated DESCRIPTION file
+	* Removed LICENSE
+	* Fixed vignette
+	* Removed TODO (as will probabaly never will be resolved)
+
 saves 0.4 (2010-10-12) ----------------------------------------------------------------------------
 	* Added link to rredis (as highly suggested alternative for storing data) to README
 	* Added `overwrite` parameter to `saves()`
