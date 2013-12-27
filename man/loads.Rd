@@ -7,10 +7,10 @@ loads(file = NULL, variables = NULL, to.data.frame = FALSE,
 }
 \arguments{
   \item{file}{character string: the (RDatas) filename from
-  which to load the variables. If using ultra.fast = TRUE
-  option, specify the directory holding the uncompressed R
-  objects (saved via \code{saves(..., ultra.fast =
-  TRUE)}).}
+  which to load the variables. If using \code{ultra.fast =
+  TRUE} option, specify the directory holding the
+  uncompressed R objects (saved via \code{saves(...,
+  ultra.fast = TRUE)}).}
 
   \item{variables}{A character vector containing the
   variable names to load}

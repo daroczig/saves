@@ -45,13 +45,13 @@ an 'RDatas' tar archive, uncompressed for better speed.
 }
 \examples{
 \dontrun{
-# Saving the demo dataset to evs.2000.hun.RDatas in current working directory.
+## Saving the demo dataset to evs.2000.hun.RDatas in current working directory.
 data(evs.2000.hun)
 saves(evs.2000.hun)
-# Saving both the demo dataset and mtcars to current working directory
+## Saving both the demo dataset and mtcars to current working directory
 saves(evs.2000.hun, mtcars)
 saves(list=c('evs.2000.hun', 'mtcars'))
-# Saving all kind of cars :)
+## Saving all kind of cars :)
 saves(cars, mtcars, overwrite = T)
 saves(list=c('cars', 'mtcars'), overwrite = T)
 }
