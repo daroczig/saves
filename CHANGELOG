@@ -8,6 +8,7 @@ saves 0.5 (2013-12-27) ---------------------------------------------------------
 	* Removed LICENSE
 	* Fixed vignette
 	* Removed TODO (as will probabaly never will be resolved)
+	* Ditched `attach` calls (although save/readRDS would be more elegant but would also break backward-compatibility)
 
 saves 0.4 (2010-10-12) ----------------------------------------------------------------------------
 	* Added link to rredis (as highly suggested alternative for storing data) to README
