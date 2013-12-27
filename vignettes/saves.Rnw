@@ -63,7 +63,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \title{The Saves Package \\ \footnotesize \textit{an approximate benchmark of performance issues while loading datasets}}
-\author{Gergely Dar\'oczi \\ \href{mailto:gergely@snowl.net}{gergely@snowl.net}}
+\author{Gergely Dar\'oczi \\ \href{mailto:daroczig@rapporer.net}{daroczig@rapporer.net}}
 
 \begin{document}
 
