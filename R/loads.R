@@ -36,47 +36,47 @@
 #' evs.filtered.df <- loads("evs.2000.hun.RDatas", c('v1', 'v5'), to.data.frame=TRUE)
 #' }
 loads <- function (file=NULL, variables=NULL, to.data.frame=FALSE, ultra.fast=FALSE) {
-	if (ultra.fast == TRUE) {
-		for (i in 1:length(variables)) {
-			f <- paste(file, "/", variables[i], '.RData', sep='')
-			if (i == 1) {
-				if (to.data.frame == FALSE) {
-					data <- list(local(get(load(f))))
-				} else {
-					data <- data.frame(local(get(load(f))))
-				}
-			} else {
-				data[paste(variables[i])] <- as.data.frame(local(get(load(f))))
-			}
-		}
-		names(data) <- variables
-		return(data)
-	}
-	if (is.null(variables) | is.null(file)) {
-		stop('Arguments missing! Specify a filename and variable names also to load.')
-	}
-	if (!file.exists(file)) {
-		stop('Archive not found!')
-	}
-	tmp <-  tempfile('saves.dir-')
-	dir.create(tmp)
-	untar(file, exdir=tmp)
-	for (i in 1:length(variables)) {
-		f <- paste(tmp, "/", variables[i], '.RData', sep='')
-		if (!file.exists(f)) {
-			stop(paste('Variable: <<', variables[i], '>> not found!'))
-		}
-		if (i == 1) {
-			if (to.data.frame == FALSE) {
-				data <- list(local(get(load(f))))
-			} else {
-				data <- data.frame(local(get(load(f))))
-			}
-		} else {
-			data[paste(variables[i])] <- as.data.frame(local(get(load(f))))
-		}
-	}
-	names(data) <- variables
-	unlink(tmp, recursive = TRUE)
-	return(data)
+    if (ultra.fast == TRUE) {
+        for (i in 1:length(variables)) {
+            f <- paste(file, "/", variables[i], '.RData', sep='')
+            if (i == 1) {
+                if (to.data.frame == FALSE) {
+                    data <- list(local(get(load(f))))
+                } else {
+                    data <- data.frame(local(get(load(f))))
+                }
+            } else {
+                data[paste(variables[i])] <- as.data.frame(local(get(load(f))))
+            }
+        }
+        names(data) <- variables
+        return(data)
+    }
+    if (is.null(variables) | is.null(file)) {
+        stop('Arguments missing! Specify a filename and variable names also to load.')
+    }
+    if (!file.exists(file)) {
+        stop('Archive not found!')
+    }
+    tmp <-  tempfile('saves.dir-')
+    dir.create(tmp)
+    untar(file, exdir=tmp)
+    for (i in 1:length(variables)) {
+        f <- paste(tmp, "/", variables[i], '.RData', sep='')
+        if (!file.exists(f)) {
+            stop(paste('Variable: <<', variables[i], '>> not found!'))
+        }
+        if (i == 1) {
+            if (to.data.frame == FALSE) {
+                data <- list(local(get(load(f))))
+            } else {
+                data <- data.frame(local(get(load(f))))
+            }
+        } else {
+            data[paste(variables[i])] <- as.data.frame(local(get(load(f))))
+        }
+    }
+    names(data) <- variables
+    unlink(tmp, recursive = TRUE)
+    return(data)
 }

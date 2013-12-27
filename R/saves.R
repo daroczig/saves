@@ -32,46 +32,47 @@
 #' saves(list=c('cars', 'mtcars'), overwrite = T)
 #' }
 saves <- function (..., list=character(), file=NULL, overwrite=FALSE, ultra.fast=FALSE) {
-	names <- as.character(substitute(list(...)))[-1L]
-	list <- c(list, names)
 
-	if (ultra.fast == TRUE) {
-		df <- list[1]
-		data <- get(df)
-		dir.create(df)
-		attach(data, warn.conflicts = FALSE)
-		for (i in 1:length(data)) {
-			save(list=names(data)[i], file=paste(df, '/', names(data)[i], '.RData', sep=''),
-					compress=FALSE, precheck=FALSE)
-		}
-		detach(data)
-		return(invisible(df))
-	}
+    names <- as.character(substitute(list(...)))[-1L]
+    list <- c(list, names)
 
-	if (is.null(file)) file <- paste(list, '.RDatas', sep='')
-	if (length(list) != length(file)) stop('Bad number of files given!')
+    if (ultra.fast == TRUE) {
+        df <- list[1]
+        data <- get(df)
+        dir.create(df)
+        attach(data, warn.conflicts = FALSE)
+        for (i in 1:length(data)) {
+            save(list=names(data)[i], file=paste(df, '/', names(data)[i], '.RData', sep=''),
+                 compress=FALSE, precheck=FALSE)
+        }
+        detach(data)
+        return(invisible(df))
+    }
 
-	for (i in 1:length(list)) {
-		if (inherits(try(data <- get(list[i]), silent=TRUE), "try-error")) stop(paste('No dataframe/list given or `', list[i] ,'` is not a dataframe/list!'))
-		if (file.exists(file[i])) {
-			if (overwrite == TRUE) {
-				file.remove(file[i])
-			} else {
-				stop(paste('Destination filename `', file[i], '` already exists! Use other filename or use paramater `overwrite` set to TRUE.'))
-			}
-		}
-		if (!is.data.frame(data) & !is.list(data)) stop(paste('No dataframe/list given or `', list[i] ,'` is not a dataframe/list!'))
+    if (is.null(file)) file <- paste(list, '.RDatas', sep='')
+    if (length(list) != length(file)) stop('Bad number of files given!')
 
-		tmp <- tempfile('saves.dir-')
-		dir.create(tmp)
-		env <- attach(data, warn.conflicts = FALSE, name=paste(letters[ceiling(runif(20)*25)], collapse = ''))
-		lapply(names(data), function(x) save(list=x, file=paste(tmp, '/', x, '.RData', sep='')))
-		rm(env)
-		w <- getwd()
-		setwd(tmp)
-		tar(paste(w, '/', file[i], sep=''), '.', compression='none')
-		setwd(w)
-		unlink(tmp, recursive = TRUE)
-		}
-	invisible(file)
+    for (i in 1:length(list)) {
+        if (inherits(try(data <- get(list[i]), silent=TRUE), "try-error")) stop(paste('No dataframe/list given or `', list[i] ,'` is not a dataframe/list!'))
+        if (file.exists(file[i])) {
+            if (overwrite == TRUE) {
+                file.remove(file[i])
+            } else {
+                stop(paste('Destination filename `', file[i], '` already exists! Use other filename or use paramater `overwrite` set to TRUE.'))
+            }
+        }
+        if (!is.data.frame(data) & !is.list(data)) stop(paste('No dataframe/list given or `', list[i] ,'` is not a dataframe/list!'))
+
+        tmp <- tempfile('saves.dir-')
+        dir.create(tmp)
+        env <- attach(data, warn.conflicts = FALSE, name=paste(letters[ceiling(runif(20)*25)], collapse = ''))
+        lapply(names(data), function(x) save(list=x, file=paste(tmp, '/', x, '.RData', sep='')))
+        rm(env)
+        w <- getwd()
+        setwd(tmp)
+        tar(paste(w, '/', file[i], sep=''), '.', compression='none')
+        setwd(w)
+        unlink(tmp, recursive = TRUE)
+    }
+    invisible(file)
 }
