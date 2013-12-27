@@ -2,13 +2,13 @@
 #'
 #' This is only a sample dataset for package \code{ggpt} and \code{evs.2000.hun} does not contain
 #' all variables from the original dataset available to download from the EVS main site.
-#' 
+#'
 #' The data is made of quite a lot of variables, see below. The field work was taken in 1999 in Hungary.
 #' The cases represents the Hungarian population (n=1.000) and a weight variable is also given.
-#' 
+#'
 #' The included variables were choosen to be able to test the \code{ggpot} package's functions, and
 #' mainly includes 'multiple response' and some 'matrix/array type' questions.
-#' 
+#'
 #' Theese are answeres to the following  questions:
 #' \itemize{
 #' 	\item how important in your life: work (Q1A)
@@ -45,12 +45,11 @@
 #'  \item how much confidence in: justice system (Q58N)
 #'  \item age completed education respondent (Q93)
 #' }
-#' 
+#'
 #' @title European Values Survey (2000) - Hungary
 #' @name evs.2000.hun
 #' @format A data frame with 1000 observations and 34 variables.
 #' @docType data
-#' @author Gergely Daróczi \email{daroczi.gergely@@btk.ppke.hu}
 #' @references \url{http://www.europeanvaluesstudy.eu/}
 #' @keywords data
 NULL

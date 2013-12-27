@@ -1,25 +1,25 @@
 #' Save the variables of a data.frame in distinct binary files
-#' 
+#'
 #' \code{saves} does what the name suggests: it saves dataframe(s) or list(s) to disk in a special, binary format.
 #' This binary format consists of distinct binary files of all separate variables of a dataframe/list
 #' merged into an uncompressed tar archive. This is done via a loop, which saves each variable/column
 #' to an an external representation of the R objects via \code{save} in a temporary directory.
 #' Theese 'RData' files are archived to an 'RDatas' tar archive, uncompressed for better speed.
-#' 
+#'
 #' @param ... R objects: the names of the objects to be saved (as symbols or character strings)
 #' @param list character vector: the name(s) of the data frame(s) or list(s) to save
 #' @param file character vector: the (RDatas) filename(s) in which to save the variables in the current
 #' working directory
 #' @param overwrite boolean: if TRUE, existing files will be deleted before saving. Default set to FALSE, which
 #' will report error on conflicting file names.
-#' @param ultra.fast boolean: if TRUE, ultra fast (...) processing is done without any check to parameters, also no 
+#' @param ultra.fast boolean: if TRUE, ultra fast (...) processing is done without any check to parameters, also no
 #' archiving or compression is done. Be sure if using this setting, as many uncompressed files could be
 #' generated in the working directory's subdirectory named to \code{df}. Only recommended
 #' for servers dealing with lot of R objects' saves and loads in a monitored environment.
 #' @return The saved filename(s) (invisible).
 #' @export
-#' @seealso 
-#' 	\code{loads} to load R objects from RDatas binary format 
+#' @seealso
+#' 	\code{loads} to load R objects from RDatas binary format
 #' @examples \dontrun{
 #' # Saving the demo dataset to evs.2000.hun.RDatas in current working directory.
 #' data(evs.2000.hun)
@@ -31,8 +31,6 @@
 #' saves(cars, mtcars, overwrite = T)
 #' saves(list=c('cars', 'mtcars'), overwrite = T)
 #' }
-#' @author Gergely Daróczi \email{gergely@@snowl.net} 
-
 saves <- function (..., list=character(), file=NULL, overwrite=FALSE, ultra.fast=FALSE) {
 	names <- as.character(substitute(list(...)))[-1L]
 	list <- c(list, names)
@@ -55,7 +53,7 @@ saves <- function (..., list=character(), file=NULL, overwrite=FALSE, ultra.fast
 
 	for (i in 1:length(list)) {
 		if (inherits(try(data <- get(list[i]), silent=TRUE), "try-error")) stop(paste('No dataframe/list given or `', list[i] ,'` is not a dataframe/list!'))
-		if (file.exists(file[i])) { 
+		if (file.exists(file[i])) {
 			if (overwrite == TRUE) {
 				file.remove(file[i])
 			} else {
@@ -74,6 +72,6 @@ saves <- function (..., list=character(), file=NULL, overwrite=FALSE, ultra.fast
 		tar(paste(w, '/', file[i], sep=''), '.', compression='none')
 		setwd(w)
 		unlink(tmp, recursive = TRUE)
-		}	
+		}
 	invisible(file)
 }
